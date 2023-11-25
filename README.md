@@ -4,7 +4,7 @@ Just my rubber ducky scripts and some wrappers.
 ## help
 ```
 $ python3 quack.py -h
-usage: quack.py [-h] [-s] [-wr] [-l LISTENER] [-pp PAYLOADPROVIDER]
+usage: quack.py [-h] [-s] [-wr] [-lr] [-l LISTENER] [-pp PAYLOADPROVIDER]
 
 Prepare rubber ducky scripts for physical engagments. Tool made by H4. Creds for powercat go to https://github.com/besimorhino/powercat
 
@@ -13,6 +13,7 @@ optional arguments:
   -s, --setup           initial setup
   -wr, --windowsReverse
                         creating an obfuscated Windows reverse shell
+  -lr, --linuxReverse   creating a Linux reverse shell (tested under Ubuntu 22.04.3)
   -l LISTENER, --listener LISTENER
                         IP and port of shell listener. Format: IP:PORT (needed for -wr option)
   -pp PAYLOADPROVIDER, --payloadProvider PAYLOADPROVIDER
