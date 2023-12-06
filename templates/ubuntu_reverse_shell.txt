@@ -1,3 +1,9 @@
+REM Ubuntu reverse shell 
+REM AUTHOR github.com/rndinfosecguy
+REM DESCRIPTION establishing a simple reverse shell based on bash. Tested on Ubuntu but should work on other distributions too.
+
+ATTACKMODE HID STORAGE
+
 REM ubuntu reverse shell
 DEFAULT_DELAY 500
 

@@ -1,4 +1,10 @@
 REM windows reverse shell (using powercat)
+REM AUTHOR github.com/rndinfosecguy
+REM DESCRIPTION establishing a simple reverse shell based on powercat which is not detected by Windows defender
+REM PROPS Props go out to the author of powercat here! github.com/besimorhino
+
+ATTACKMODE HID STORAGE
+
 DEFAULT_DELAY 500
 DELAY 3000
 
